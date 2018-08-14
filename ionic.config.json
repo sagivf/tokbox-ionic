@@ -1,0 +1,7 @@
+{
+  "name": "tokbox",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
