@@ -1,16 +1,31 @@
-
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      OpenTok Ionic Basic Video Chat
+      Ionic Tokbox Video
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  <div style="text-align:center">
-    <button (click)="startCall()">Start OpenTok Call</button>
-  </div>
+<ion-content>
   <div id="subscriber"></div>
-  <div id="publisher"></div>
+  <div id="controls" text-center>
+    <div id="preview">
+      <p class="instructions">Hello Beautiful</p>
+      <div id="publisher"></div>
+    </div>
+    <div id="room-controls">
+      <!--<ion-item color="light">-->
+        <!--<ion-label position="fixed">Room Name:</ion-label>-->
+        <!--<ion-input type="text" placeholder="Enter a room name" name="roomName" [(ngModel)]="roomName" >-->
+        <!--</ion-input>-->
+      <!--</ion-item>-->
+      <ion-button shape="round" color="primary"
+                  (click)="joinRoom()"
+                  *ngIf="!roomJoined">Join Room</ion-button>
+      <ion-button shape="round" color="primary"
+                  (click)="leaveRoom()"
+                  *ngIf="roomJoined">Leave Room</ion-button>
+    </div>
+    <div id="log"></div>
+  </div>
 </ion-content>
