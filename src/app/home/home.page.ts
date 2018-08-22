@@ -1,4 +1,5 @@
 import {Component, ViewEncapsulation, NgZone} from '@angular/core';
+// import * as OT from '@opentok/client'; // doesn't work in cordova version
 
 declare var OT: any;
 
@@ -16,6 +17,7 @@ export class HomePage {
   sessionId: string;
   token: string;
   roomJoined = false;
+  joinCount = 0;
 
   constructor(private zone: NgZone) {
     this.apiKey = '46171312';
@@ -33,11 +35,17 @@ export class HomePage {
 
     this.session.on({
       streamCreated: (event) => {
+        this.zone.run(() => this.joinCount++);
         this.session.subscribe(event.stream, 'subscriber', {
           insertMode: 'append'
         });
+        // TODO only cordova
+        OT.updateViews();
       },
       streamDestroyed: () => {
+        this.zone.run(() => this.joinCount--);
+        // TODO only cordova
+        OT.updateViews();
       }
     });
 

@@ -1,15 +1,14 @@
-<ion-header>
+<div style="overflow: auto">
   <ion-toolbar>
     <ion-title>
       Ionic Tokbox Video
     </ion-title>
   </ion-toolbar>
-</ion-header>
-
-<ion-content>
-  <div id="subscriber"></div>
+  <div class="cc" text-center *ngIf="roomJoined && joinCount">
+    <div id="subscriber"></div>
+  </div>
   <div id="controls" text-center>
-    <div id="preview">
+    <div>
       <p class="instructions">Hello Beautiful</p>
       <div id="publisher"></div>
     </div>
@@ -26,6 +25,5 @@
                   (click)="leaveRoom()"
                   *ngIf="roomJoined">Leave Room</ion-button>
     </div>
-    <div id="log"></div>
   </div>
-</ion-content>
+</div>
