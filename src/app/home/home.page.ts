@@ -1,7 +1,6 @@
 import {Component, ViewEncapsulation, NgZone} from '@angular/core';
-// import * as OT from '@opentok/client'; // doesn't work in cordova version
-
-declare var OT: any;
+import {Platform} from '@ionic/angular';
+import * as OT from '@opentok/client'; // doesn't work in cordova version
 
 @Component({
   selector: 'app-home',
@@ -10,7 +9,6 @@ declare var OT: any;
   encapsulation: ViewEncapsulation.None
 })
 export class HomePage {
-
   session: any;
   publisher: any;
   apiKey: any;
@@ -19,7 +17,8 @@ export class HomePage {
   roomJoined = false;
   joinCount = 0;
 
-  constructor(private zone: NgZone) {
+  constructor(private zone: NgZone,
+              private platform: Platform) {
     this.apiKey = '46171312';
     this.sessionId = '1_MX40NjE3MTMxMn5-MTUzNDMxOTg1MTUwN35zdmtveDc5ZG1heitxUU5Ra3FYZzg0VVF-fg';
     this.token = 'T1==cGFydG5lcl9pZD00NjE3MTMxMiZzZGtfdmVyc2lvbj1kZWJ1Z2dlciZzaWc9YzNjNTMzMjA5NWFjODA5YTYxZDQ3NmRhNmZlZDBjYzhlZjMzMzcyMzpzZXNzaW9uX2lkPTFfTVg0ME5qRTNNVE14TW41LU1UVXpORE14T1RnMU1UVXdOMzV6ZG10dmVEYzVaRzFoZWl0eFVVNVJhM0ZZWnpnMFZWRi1mZyZjcmVhdGVfdGltZT0xNTM0MzE5ODUxJnJvbGU9bW9kZXJhdG9yJm5vbmNlPTE1MzQzMTk4NTEuNTIyNjExNjg0NzgyNjcmZXhwaXJlX3RpbWU9MTUzNjkxMTg1MQ==';
@@ -31,6 +30,7 @@ export class HomePage {
   }
 
   joinRoom() {
+    const isDevice = this.platform.is('cordova') && !this.platform.is('core');
     this.session = OT.initSession(this.apiKey, this.sessionId);
 
     this.session.on({
@@ -39,13 +39,17 @@ export class HomePage {
         this.session.subscribe(event.stream, 'subscriber', {
           insertMode: 'append'
         });
-        // TODO only cordova
-        OT.updateViews();
+
+        if (isDevice) {
+          (<any>OT).updateViews();
+        }
       },
       streamDestroyed: () => {
         this.zone.run(() => this.joinCount--);
-        // TODO only cordova
-        OT.updateViews();
+
+        if (isDevice) {
+          (<any>OT).updateViews();
+        }
       }
     });
 
