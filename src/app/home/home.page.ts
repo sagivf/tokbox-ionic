@@ -1,6 +1,9 @@
 import {Component, ViewEncapsulation, NgZone} from '@angular/core';
+import * as TB from '@opentok/client'; // code doesn't work in cordova version
 import {Platform} from '@ionic/angular';
-import * as OT from '@opentok/client'; // doesn't work in cordova version
+import {environment} from '../../environments/environment';
+
+declare var OT: any;
 
 @Component({
   selector: 'app-home',
@@ -19,9 +22,12 @@ export class HomePage {
 
   constructor(private zone: NgZone,
               private platform: Platform) {
-    this.apiKey = '46171312';
-    this.sessionId = '1_MX40NjE3MTMxMn5-MTUzNDMxOTg1MTUwN35zdmtveDc5ZG1heitxUU5Ra3FYZzg0VVF-fg';
-    this.token = 'T1==cGFydG5lcl9pZD00NjE3MTMxMiZzZGtfdmVyc2lvbj1kZWJ1Z2dlciZzaWc9YzNjNTMzMjA5NWFjODA5YTYxZDQ3NmRhNmZlZDBjYzhlZjMzMzcyMzpzZXNzaW9uX2lkPTFfTVg0ME5qRTNNVE14TW41LU1UVXpORE14T1RnMU1UVXdOMzV6ZG10dmVEYzVaRzFoZWl0eFVVNVJhM0ZZWnpnMFZWRi1mZyZjcmVhdGVfdGltZT0xNTM0MzE5ODUxJnJvbGU9bW9kZXJhdG9yJm5vbmNlPTE1MzQzMTk4NTEuNTIyNjExNjg0NzgyNjcmZXhwaXJlX3RpbWU9MTUzNjkxMTg1MQ==';
+    this.apiKey = environment.apiKey;
+    this.sessionId = environment.sessionId;
+    this.token = environment.token;
+    if (!OT) {
+      OT = TB;
+    }
   }
 
   leaveRoom() {
