@@ -1,5 +1,5 @@
 import {Component, ViewEncapsulation, NgZone} from '@angular/core';
-import * as TB from '@opentok/client'; // code doesn't work in cordova version
+// import * as OT from '@opentok/client'; // code doesn't work in cordova version
 import {Platform} from '@ionic/angular';
 import {environment} from '../../environments/environment';
 
@@ -25,9 +25,6 @@ export class HomePage {
     this.apiKey = environment.apiKey;
     this.sessionId = environment.sessionId;
     this.token = environment.token;
-    if (!OT) {
-      OT = TB;
-    }
   }
 
   leaveRoom() {
